@@ -15,4 +15,6 @@ public interface CityReadService {
     List<City> list();
 
     PageInfo<City> pageList();
+
+    City getById(Long id);
 }

@@ -5,13 +5,11 @@ import com.gome.o2m.swagger.model.City;
 import com.gome.o2m.swagger.service.CityReadService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -42,5 +40,12 @@ public class CityController {
     public PageInfo<City> pageList(){
         logger.info("city.pageList()");
         return cityReadService.pageList();
+    }
+
+    @ApiOperation(notes = "根据ID获取城市详情", value = "根据ID获取城市详情")
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public City getCityById(@ApiParam(value = "id", name = "城市id") @PathVariable(value = "id") Long id){
+        logger.info("city.getCityById()");
+        return cityReadService.getById(id);
     }
 }

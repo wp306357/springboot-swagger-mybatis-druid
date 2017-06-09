@@ -33,4 +33,11 @@ public class CityReadServiceImpl implements CityReadService {
         List<City> cities = cityReadMapper.selectAll();
         return new PageInfo(cities);
     }
+
+    @Override
+    public City getById(Long id) {
+        City city = new City();
+        city.setId(id);
+        return cityReadMapper.selectOne(city);
+    }
 }
