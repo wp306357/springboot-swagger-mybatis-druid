@@ -62,6 +62,11 @@
             <artifactId>springfox-swagger-ui</artifactId>
             <version>${swagger.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.drore.cloud</groupId>
+            <artifactId>swagger-bootstrap-ui</artifactId>
+            <version>1.0</version>
+        </dependency>
 
         <!--lombok工具-->
         <dependency>
