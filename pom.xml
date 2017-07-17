@@ -62,11 +62,11 @@
             <artifactId>springfox-swagger-ui</artifactId>
             <version>${swagger.version}</version>
         </dependency>
-        <dependency>
+        <!--<dependency>
             <groupId>com.drore.cloud</groupId>
             <artifactId>swagger-bootstrap-ui</artifactId>
             <version>1.0</version>
-        </dependency>
+        </dependency>-->
 
         <!--lombok工具-->
         <dependency>
@@ -90,6 +90,20 @@
             <groupId>tk.mybatis</groupId>
             <artifactId>mapper-spring-boot-starter</artifactId>
             <version>1.1.1</version>
+        </dependency>
+
+        <!--spock相关-->
+        <dependency>
+            <groupId>org.spockframework</groupId>
+            <artifactId>spock-core</artifactId>
+            <version>1.1-groovy-2.4</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.spockframework</groupId>
+            <artifactId>spock-spring</artifactId>
+            <version>1.1-groovy-2.4</version>
+            <scope>test</scope>
         </dependency>
 
     </dependencies>

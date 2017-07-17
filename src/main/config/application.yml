@@ -53,6 +53,7 @@ mybatis:
 mapper:
     mappers:
         - com.gome.o2m.swagger.base.ReadMapper
+        - com.gome.o2m.swagger.base.WriteMapper
     not-empty: false
     identity: MYSQL
 
