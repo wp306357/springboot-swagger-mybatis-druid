@@ -8,11 +8,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @date 2017/6/6 11:19
  * @Copyright(c) gome inc Gome Co.,LTD
  */
-//@Controller
+@Controller
 public class IndexController {
 
-    /*@RequestMapping("/")
+    @RequestMapping("/")
     public String index(){
         return "redirect:swagger-ui.html";
-    }*/
+    }
 }
