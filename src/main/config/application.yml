@@ -4,7 +4,7 @@ logging:
         com:
             gome:
                 o2m:
-                    swagger: warn
+                    swagger: info
     file: /tmp/swagger/swagger_demo.log
 
 #数据库配置

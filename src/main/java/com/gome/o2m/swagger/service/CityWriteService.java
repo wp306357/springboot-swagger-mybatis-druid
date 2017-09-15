@@ -1,5 +1,6 @@
 package com.gome.o2m.swagger.service;
 
+import com.gome.o2m.swagger.exception.CommonException;
 import com.gome.o2m.swagger.model.City;
 
 /**
@@ -9,5 +10,5 @@ import com.gome.o2m.swagger.model.City;
  */
 public interface CityWriteService {
 
-    Boolean insert(City city);
+    Boolean insert(City city) throws CommonException;
 }

@@ -1,16 +1,18 @@
 package com.gome.o2m.swagger.aop;
 
+import com.gome.o2m.swagger.exception.CommonException;
+import com.gome.o2m.swagger.exception.ExceptionCodeEnum;
+import com.gome.o2m.swagger.vo.CommonResponse;
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.*;
+import org.aspectj.lang.annotation.Around;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
-import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -27,29 +29,8 @@ import java.util.stream.Stream;
 public class WebLogAspect {
     private final static Logger logger = LoggerFactory.getLogger(WebLogAspect.class);
 
-    ThreadLocal<Long> startTime = new ThreadLocal<>();
-
-    @Pointcut("execution(public * com.gome.o2m.swagger.controller..*.*(..))")
-    public void webLog(){}
-
     @Pointcut("execution(public * com.gome.o2m.swagger.controller..*.*(..))")
     public void paramAspect(){}
-
-    @Before("webLog()")
-    public void before(){
-        startTime.set(System.currentTimeMillis());
-        logger.error("WebLogAspect.before::start");
-        ServletRequestAttributes attributes = (ServletRequestAttributes)RequestContextHolder.getRequestAttributes();
-        HttpServletRequest request = attributes.getRequest();
-        String servletPath = request.getServletPath();
-
-        logger.error("WebLogAspect.before::end-请求地址:{}", servletPath);
-    }
-
-    @AfterReturning(pointcut = "webLog()")
-    public void after(){
-        logger.error("WebLogAspect.after::执行时间:{}", (System.currentTimeMillis()-startTime.get()));
-    }
 
     /**
      * 参数日志记录
@@ -64,13 +45,22 @@ public class WebLogAspect {
         Method method = signature.getMethod();
         String className = method.getDeclaringClass().getName();
         String methodName = method.getName();
-        logger.error("WebLogAspect.intecptor::请求方法:{}", className + "." + methodName);
+        String fullMethodName = className + "." + methodName;
+        logger.info("请求方法:{}", fullMethodName);
         Object[] args = joinPoint.getArgs();
-        logger.error("请求参数:{}", Stream.of(args).map(item -> item.toString()).collect(Collectors.joining(",")));
+        logger.info("请求参数:{}", Stream.of(args).map(item -> item.toString()).collect(Collectors.joining(",")));
+        long startTime = System.currentTimeMillis();
         try {
             result = joinPoint.proceed();
         } catch (Throwable throwable) {
-            logger.error("WebLogAspect.intecptor.error:{}", throwable);
+            logger.error("方法:{}->发生异常:{}", fullMethodName, throwable);
+            if(throwable instanceof CommonException){
+                CommonException exception = (CommonException)throwable;
+                return CommonResponse.fail(exception.getTypeEnum());
+            }
+            return CommonResponse.fail(ExceptionCodeEnum.SYSTEM_ERROR);
+        }finally {
+            logger.info("执行时间:{}", (System.currentTimeMillis()-startTime));
         }
         return result;
     }

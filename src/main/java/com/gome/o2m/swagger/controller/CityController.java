@@ -1,8 +1,12 @@
 package com.gome.o2m.swagger.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.gome.o2m.swagger.exception.CommonException;
+import com.gome.o2m.swagger.exception.ExceptionCodeEnum;
 import com.gome.o2m.swagger.model.City;
 import com.gome.o2m.swagger.service.CityReadService;
+import com.gome.o2m.swagger.service.CityWriteService;
+import com.gome.o2m.swagger.vo.CommonResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -27,25 +31,38 @@ public class CityController {
 
     @Autowired
     private CityReadService cityReadService;
+    @Autowired
+    private CityWriteService cityWriteService;
 
     @ApiOperation(notes = "城市列表", value = "城市列表")
     @RequestMapping(value = "/list", method = RequestMethod.POST)
-    public List<City> list(@RequestBody City city){
+    public CommonResponse<List<City>> list(@RequestBody City city){
         logger.info("city.list()");
-        return cityReadService.list();
+        return CommonResponse.success(cityReadService.list());
     }
 
     @ApiOperation(notes = "城市分页列表", value = "城市分页列表")
     @RequestMapping(value = "/pageList", method = RequestMethod.GET)
-    public PageInfo<City> pageList(){
+    public CommonResponse<PageInfo<City>> pageList(){
         logger.info("city.pageList()");
-        return cityReadService.pageList();
+        return CommonResponse.success(cityReadService.pageList());
     }
 
     @ApiOperation(notes = "根据ID获取城市详情", value = "根据ID获取城市详情")
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public City getCityById(@ApiParam(value = "id", name = "城市id") @PathVariable(value = "id") Long id){
+    public CommonResponse<City> getCityById(@ApiParam(value = "id", name = "城市id") @PathVariable(value = "id") Long id) throws CommonException{
         logger.info("city.getCityById()");
-        return cityReadService.getById(id);
+        return CommonResponse.success(cityReadService.getById(id));
+    }
+
+    @ApiOperation(notes = "添加城市", value = "添加城市")
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
+    public CommonResponse<Boolean> add(@RequestBody City city) throws CommonException {
+        logger.info("city.add()");
+        Boolean flag = cityWriteService.insert(city);
+        if(flag){
+            return CommonResponse.success();
+        }
+        return CommonResponse.fail(ExceptionCodeEnum.SYSTEM_ERROR);
     }
 }
