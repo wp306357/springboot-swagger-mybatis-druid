@@ -7,6 +7,7 @@ import com.gome.o2m.swagger.model.City;
 import com.gome.o2m.swagger.service.CityReadService;
 import com.gome.o2m.swagger.service.CityWriteService;
 import com.gome.o2m.swagger.vo.CommonResponse;
+import com.gome.o2m.swagger.vo.PageInfoVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -43,7 +44,7 @@ public class CityController {
 
     @ApiOperation(notes = "城市分页列表", value = "城市分页列表")
     @RequestMapping(value = "/pageList", method = RequestMethod.GET)
-    public CommonResponse<PageInfo<City>> pageList(){
+    public CommonResponse<PageInfoVo<City>> pageList(){
         logger.info("city.pageList()");
         return CommonResponse.success(cityReadService.pageList());
     }

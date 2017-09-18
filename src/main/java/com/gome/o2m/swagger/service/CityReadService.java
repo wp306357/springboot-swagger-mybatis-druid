@@ -1,7 +1,7 @@
 package com.gome.o2m.swagger.service;
 
-import com.github.pagehelper.PageInfo;
 import com.gome.o2m.swagger.model.City;
+import com.gome.o2m.swagger.vo.PageInfoVo;
 
 import java.util.List;
 
@@ -14,7 +14,7 @@ public interface CityReadService {
 
     List<City> list();
 
-    PageInfo<City> pageList();
+    PageInfoVo<City> pageList();
 
     City getById(Long id);
 }

@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.gome.o2m.swagger.dao.CityReadMapper;
 import com.gome.o2m.swagger.model.City;
 import com.gome.o2m.swagger.service.CityReadService;
+import com.gome.o2m.swagger.vo.PageInfoVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,10 +29,14 @@ public class CityReadServiceImpl implements CityReadService {
     }
 
     @Override
-    public PageInfo<City> pageList() {
+    public PageInfoVo<City> pageList() {
         PageHelper.startPage(1,1);
         List<City> cities = cityReadMapper.selectAll();
-        return new PageInfo(cities);
+        PageInfo<City> pageInfo = new PageInfo(cities);
+        PageInfoVo<City> data = new PageInfoVo<>();
+        data.setRows(pageInfo.getList());
+        data.setTotal(pageInfo.getTotal());
+        return data;
     }
 
     @Override
