@@ -24,6 +24,10 @@ public class CommonResponse<T> extends BaseVo {
      */
     private String errorMsg;
     /**
+     * 异常类型码
+     */
+    private String errorTypeCode;
+    /**
      * 响应结果
      */
     private T data;
@@ -54,6 +58,7 @@ public class CommonResponse<T> extends BaseVo {
                 .isSuccess(false)
                 .errorCode(typeEnum.getCode())
                 .errorMsg(typeEnum.getMsg())
+                .errorTypeCode(typeEnum.getTypeEnum().getCode())
                 .build();
     }
 }

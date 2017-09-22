@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gome.o2m.swagger.dao.SysPermissionReadMapper">
+
+    <resultMap id="sysPermissionMap" type="SysPermission">
+        <id property="id" column="id" />
+        <result property="name" column="name" />
+        <result property="resourceType" column="resourceType" />
+        <result property="url" column="url" />
+        <result property="permission" column="permission" />
+        <result property="parentId" column="parentId" />
+        <result property="parentIds" column="parentIds" />
+        <result property="available" column="available" />
+    </resultMap>
+
+    <select id="getPermissionByRoleId" resultType="SysPermission" parameterType="long">
+        SELECT
+          p.*
+        FROM
+          sys_role_permission rp LEFT JOIN sys_permission p ON rp.permission_id = p.id
+        WHERE rp.role_id = #{roleId}
+    </select>
+
+</mapper>

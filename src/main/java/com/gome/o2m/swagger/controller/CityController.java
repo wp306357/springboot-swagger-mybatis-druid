@@ -1,6 +1,5 @@
 package com.gome.o2m.swagger.controller;
 
-import com.github.pagehelper.PageInfo;
 import com.gome.o2m.swagger.exception.CommonException;
 import com.gome.o2m.swagger.exception.ExceptionCodeEnum;
 import com.gome.o2m.swagger.model.City;
