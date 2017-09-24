@@ -3,6 +3,7 @@ package com.gome.o2m.swagger.aop;
 import com.gome.o2m.swagger.exception.CommonException;
 import com.gome.o2m.swagger.exception.ExceptionCodeEnum;
 import com.gome.o2m.swagger.vo.CommonResponse;
+import org.apache.shiro.authz.UnauthorizedException;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -39,7 +40,7 @@ public class WebLogAspect {
      * @return
      */
     @Around("paramAspect()")
-    public Object intecptor(ProceedingJoinPoint joinPoint){
+    public Object intecptor(ProceedingJoinPoint joinPoint) throws Throwable {
         Object result = null;
         MethodSignature signature = (MethodSignature)joinPoint.getSignature();
         Method method = signature.getMethod();
@@ -57,6 +58,9 @@ public class WebLogAspect {
             if(throwable instanceof CommonException){
                 CommonException exception = (CommonException)throwable;
                 return CommonResponse.fail(exception.getTypeEnum());
+            }
+            if (throwable instanceof UnauthorizedException){
+                return CommonResponse.fail(ExceptionCodeEnum.UNAUTHORIZED_ROLE);
             }
             return CommonResponse.fail(ExceptionCodeEnum.SYSTEM_ERROR);
         }finally {

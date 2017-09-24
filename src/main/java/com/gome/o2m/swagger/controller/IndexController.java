@@ -3,8 +3,10 @@ package com.gome.o2m.swagger.controller;
 import com.gome.o2m.swagger.exception.CommonException;
 import com.gome.o2m.swagger.exception.ExceptionCodeEnum;
 import com.gome.o2m.swagger.vo.CommonResponse;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
+import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -12,8 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.util.Map;
 
 /**
  * @author wangpeng24
@@ -26,15 +26,16 @@ public class IndexController {
 
     @RequestMapping("/")
     public String swaggerIndex(){
-        /*return "redirect:swagger-ui.html";*/
+        //return "redirect:swagger-ui.html";
         return "redirect:index";
     }
 
     @RequestMapping("/index")
     @ResponseBody
-    public CommonResponse<String> index(HttpServletRequest request, HttpServletResponse response){
-        logger.info("index success requestedSessionId:{}", request.getAttribute("sessionId"));
-        return CommonResponse.success(request.getAttribute("sessionId"));
+    public CommonResponse<String> index(){
+        Subject subject = SecurityUtils.getSubject();
+        logger.info("login success,user:{}->token:{}",subject.getPrincipal(), subject.getSession().getId());
+        return CommonResponse.success(subject.getSession().getId());
     }
 
     @RequestMapping("/login")

@@ -10,6 +10,7 @@ import com.gome.o2m.swagger.vo.PageInfoVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,7 @@ public class CityController {
 
     @ApiOperation(notes = "城市列表", value = "城市列表")
     @RequestMapping(value = "/list", method = RequestMethod.POST)
+    @RequiresPermissions("city:view")
     public CommonResponse<List<City>> list(@RequestBody City city){
         logger.info("city.list()");
         return CommonResponse.success(cityReadService.list());
@@ -43,6 +45,7 @@ public class CityController {
 
     @ApiOperation(notes = "城市分页列表", value = "城市分页列表")
     @RequestMapping(value = "/pageList", method = RequestMethod.GET)
+    @RequiresPermissions("city:view")
     public CommonResponse<PageInfoVo<City>> pageList(){
         logger.info("city.pageList()");
         return CommonResponse.success(cityReadService.pageList());
@@ -50,6 +53,7 @@ public class CityController {
 
     @ApiOperation(notes = "根据ID获取城市详情", value = "根据ID获取城市详情")
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @RequiresPermissions("city:view")
     public CommonResponse<City> getCityById(@ApiParam(value = "id", name = "城市id") @PathVariable(value = "id") Long id) throws CommonException{
         logger.info("city.getCityById()");
         return CommonResponse.success(cityReadService.getById(id));
@@ -57,6 +61,7 @@ public class CityController {
 
     @ApiOperation(notes = "添加城市", value = "添加城市")
     @RequestMapping(value = "/add", method = RequestMethod.POST)
+    @RequiresPermissions("city:add")
     public CommonResponse<Boolean> add(@RequestBody City city) throws CommonException {
         logger.info("city.add()");
         Boolean flag = cityWriteService.insert(city);
