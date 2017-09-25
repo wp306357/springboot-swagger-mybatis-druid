@@ -7,8 +7,8 @@ logging:
                     swagger: info
     file: /tmp/swagger/swagger_demo.log
 
-#数据库配置
 spring:
+    #数据库配置
     datasource:
         url: jdbc:mysql://localhost:3306/test?characterEncoding=UTF-8&useSSL=false
         driverClassName: com.mysql.jdbc.Driver
@@ -30,6 +30,14 @@ spring:
         maxPoolPreparedStatementPerConnectionSize: 20
         filters: stat,wall,log4j
         connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+
+    #rabbitMq配置
+    rabbitmq:
+          host: 192.168.0.86
+          port: 5672
+          username: admin
+          password: 123456
+
 
 #swagger配置
 application:
