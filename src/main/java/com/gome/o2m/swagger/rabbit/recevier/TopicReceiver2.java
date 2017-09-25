@@ -1,6 +1,7 @@
 package com.gome.o2m.swagger.rabbit.recevier;
 
 import com.gome.o2m.swagger.common.Constants;
+import com.gome.o2m.swagger.model.SysUser;
 import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
@@ -16,5 +17,10 @@ public class TopicReceiver2 {
     @RabbitHandler
     public void handlerMessages(String message){
         System.out.println("Topic Receiver2  : " + message);
+    }
+
+    @RabbitHandler
+    public void HandlerSysUser(SysUser sysUser){
+        System.out.println("Topic Receiver2 SysUser:" + sysUser);
     }
 }

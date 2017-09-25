@@ -1,7 +1,7 @@
 package com.gome.o2m.swagger.rabbit.sender;
 
 import com.gome.o2m.swagger.common.Constants;
-import com.gome.o2m.swagger.config.rabbit.RabbitConfig;
+import com.gome.o2m.swagger.model.SysUser;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -40,5 +40,14 @@ public class TopicSender {
         String context = "hi, i am messages 2";
         System.out.println("Sender : " + context);
         this.rabbitTemplate.convertAndSend(Constants.TOPIC_EXCHANGE_NAME, "topic.messages", context);
+    }
+
+    /**
+     * 交换机会转发到queue2(topic.messages)队列中
+     */
+    public void sendSysUser() {
+        SysUser sysUser = new SysUser();
+        System.out.println("Sender : " + sysUser);
+        this.rabbitTemplate.convertAndSend(Constants.TOPIC_EXCHANGE_NAME, "topic.messages", sysUser);
     }
 }
