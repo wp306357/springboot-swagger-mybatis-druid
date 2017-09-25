@@ -47,10 +47,10 @@ public class IndexController {
         if (exception != null) {
             if (UnknownAccountException.class.getName().equals(exception)) {
                 logger.info("UnknownAccountException -- > 账号不存在：");
-                throw new CommonException(ExceptionCodeEnum.AUUCOUNT_LOGIN_ERROR);
+                throw new CommonException(ExceptionCodeEnum.ACCOUNT_LOGIN_ERROR);
             } else if (IncorrectCredentialsException.class.getName().equals(exception)) {
                 logger.info("IncorrectCredentialsException -- > 密码不正确：");
-                throw new CommonException(ExceptionCodeEnum.AUUCOUNT_LOGIN_ERROR);
+                throw new CommonException(ExceptionCodeEnum.ACCOUNT_LOGIN_ERROR);
             } else if ("kaptchaValidateFailed".equals(exception)) {
                 logger.info("kaptchaValidateFailed -- > 验证码错误");
                 throw new CommonException(ExceptionCodeEnum.VERIFY_CODE_ERROR);
