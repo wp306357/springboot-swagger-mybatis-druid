@@ -7,6 +7,7 @@ import com.gome.o2m.swagger.model.City;
 import com.gome.o2m.swagger.service.CityReadService;
 import com.gome.o2m.swagger.vo.PageInfoVo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -40,6 +41,7 @@ public class CityReadServiceImpl implements CityReadService {
     }
 
     @Override
+    @Cacheable(value="signonCache", key="'petstore:signon:'+#id", unless="#result==null")
     public City getById(Long id) {
         City city = new City();
         city.setId(id);

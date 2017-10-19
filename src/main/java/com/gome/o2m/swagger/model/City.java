@@ -5,6 +5,8 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.ToString;
 
+import java.io.Serializable;
+
 /**
  * @author wangpeng24
  * @date 2017/6/6 16:00
@@ -13,7 +15,7 @@ import lombok.ToString;
 @Data
 @ToString
 @ApiModel(value = "City", description = "城市")
-public class City {
+public class City implements Serializable{
     /**
      * id
      */

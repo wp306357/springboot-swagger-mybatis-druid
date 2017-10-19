@@ -14,6 +14,7 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -34,6 +35,8 @@ public class CityController {
     private CityReadService cityReadService;
     @Autowired
     private CityWriteService cityWriteService;
+    @Autowired
+    private RedisTemplate redisTemplate;
 
     @ApiOperation(notes = "城市列表", value = "城市列表")
     @RequestMapping(value = "/list", method = RequestMethod.POST)

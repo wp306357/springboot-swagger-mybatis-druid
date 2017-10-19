@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
  * Created by Administrator on 2017/9/25.
  */
 @Component
-@RabbitListener(queues = Constants.TOPIC_MESSAGE)
+//@RabbitListener(queues = Constants.TOPIC_MESSAGE)
 public class TopicReceiver1 {
 
     @RabbitHandler
